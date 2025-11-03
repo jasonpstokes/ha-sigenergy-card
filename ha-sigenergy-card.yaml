@@ -17,7 +17,7 @@ custom_fields:
   gateway:
     card:
       type: picture
-      image: local/sigenergy_gateway5.svg
+      image: local/sigenergy_gateway.svg
       tap_action:
         action: navigate
         navigation_path: /energy
@@ -722,4 +722,5 @@ styles:
       - position: absolute
       - top: 260px
       - left: 230px
+
       - width: 50px
