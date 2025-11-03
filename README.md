@@ -27,7 +27,7 @@ I use [Solcast](https://github.com/BJReplay/ha-solcast-solar) - you'll likely ne
 ## 4. Images  
 Save/copy the images into your Home Assistant /config/www/  
 
-- I've created the gateway image, but the  battery one is a vector converstion that needs to be re-created.
+- I've created the gateway image, but the  battery one is a vector converstion that needs to be fixed! (I might, it only annoys me a little though)
 
 ## 5. In the UI, add a new *manual* card and paste the yaml from *ha-sigenergy-card.yaml*  
 
@@ -35,5 +35,6 @@ Save/copy the images into your Home Assistant /config/www/
 
 > [!NOTE]
 > - Reminaing time (to charged/empty) only displays if time < 24 hours
+> - the card width is auto (not defined) to fill the UI space, but the elements are arranged on the left to fit my smartphone screen width.
 
 Please let me know if something isn't working.
