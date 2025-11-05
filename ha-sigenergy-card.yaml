@@ -241,7 +241,7 @@ custom_fields:
           else 'Floating' }}
       secondary: >
         {% set capacity = states('sensor.sigen_plant_rated_energy_capacity')|float(1) %}
-        {% set power = states('sensor.sigen_plant_battery_power')|float(1) %}
+        {% set power = states('sensor.sigen_plant_battery_power')|float(0) + 0.001 %}
         {% set remaining_kwh = states('sensor.sigen_plant_battery_usable_capacity')|float(1) %}
         {% if power > 0 %}
           {% set remaining_kwh = capacity - remaining_kwh %}
@@ -724,3 +724,4 @@ styles:
       - left: 230px
 
       - width: 50px
+
