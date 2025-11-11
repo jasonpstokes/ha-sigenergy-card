@@ -145,7 +145,7 @@ custom_fields:
         {{ (grid_power|round(2) ~ ' kW') if (grid_power <= -1.0 or grid_power >= 1.0)
           else ((grid_power * 1000)|int ~ ' W') }}
       secondary: |
-        GRID
+        {{ 'GRID' if is_state('sensor.sigen_plant_grid_connection_status','On Grid') else 'OFF GRID' }}
       tap_action:
         action: more-info
         entity: sensor.sigen_plant_grid_active_power
@@ -160,7 +160,7 @@ custom_fields:
             }
             .secondary {
               font-size: 0.8em !important;
-              color: skyblue !important;
+              color: {{ 'skyblue' if is_state('sensor.sigen_plant_grid_connection_status','On Grid') else 'red' }} !important;
               letter-spacing: -0.1px !important;
               text-align: left;
             }
@@ -724,4 +724,5 @@ styles:
       - left: 230px
 
       - width: 50px
+
 
