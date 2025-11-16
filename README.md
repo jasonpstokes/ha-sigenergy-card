@@ -65,7 +65,7 @@ ii. **Sigen Plant Battery time remaining**
 I use [Solcast](https://github.com/BJReplay/ha-solcast-solar); you may need to modify the entity_id to match your solar forecast entity. (Search the card for solcast)  
 
 ## 4. Copy Images  
-Copy the [images](https://github.com/jasonpstokes/ha-sigenergy-card/tree/main/images) into your Home Assistant /config/www/  
+Copy the [images](https://github.com/jasonpstokes/ha-sigenergy-card/tree/main/www) into your Home Assistant /config/www/  
 
 ## 5. Add the card
 In your Dashboard, add a new *manual* card and paste the yaml from [ha-sigenergy-card.yaml](https://github.com/jasonpstokes/ha-sigenergy-card/blob/main/ha-sigenergy-card.yaml)  
