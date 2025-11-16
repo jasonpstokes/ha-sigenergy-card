@@ -53,7 +53,7 @@ ii. **Sigen Plant Battery time remaining**
 > {% set m = (hours%1 * 60)|int %}
 > {% if h < 24 and (h != 0 or (h >= 0 and m > 0)) %}
 >   {{ h ~ 'h ' if h > 0 }}{{ m ~ 'm ' if m >= 1 }}until {{ 'charged' if (power > 0) else 'empty' }}
-> {% endif %}`
+> {% endif %}
 > ```  
 > Device: `Sigen Plant` (optional)  
 > Availability template:
