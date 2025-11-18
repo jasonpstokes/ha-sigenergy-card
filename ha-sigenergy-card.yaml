@@ -20,7 +20,7 @@ custom_fields:
       image: local/sigenergy_gateway.svg
       tap_action:
         action: navigate
-        navigation_path: /energy
+        navigation_path: /config/integrations/integration/sigen
       card_mod:
         style: |
           ha-card {
@@ -296,7 +296,7 @@ custom_fields:
             border: none;
             position: relative;
             width: 1px;
-            height: 100px;
+            height: 75px;
             background-color: gray;
           }
   vertical_line_grid:
@@ -621,8 +621,8 @@ styles:
     sigenstor:
       - position: absolute
       - top: 70px
-      - left: 80px
-      - width: 95px
+      - left: 85px
+      - width: 90px
     gateway:
       - position: absolute
       - top: 120px
@@ -655,12 +655,12 @@ styles:
     battery_soc:
       - position: absolute
       - top: 270px
-      - left: "-30px"
+      - left: "-25px"
       - width: 200px
     battery_status:
       - position: absolute
       - top: 305px
-      - left: "-30px"
+      - left: "-25px"
       - width: 200px
     vertical_line_pv:
       - position: absolute
@@ -674,8 +674,8 @@ styles:
       - width: 1px
     vertical_line_sig:
       - position: absolute
-      - top: 250px
-      - left: 170px
+      - top: 278px
+      - left: 175px
       - width: 1px
     vertical_line_grid:
       - position: absolute
