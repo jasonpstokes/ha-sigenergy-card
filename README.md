@@ -61,14 +61,14 @@ ii. **Sigen Plant Battery time remaining**
 > {{ has_value('sensor.solcast_pv_forecast_forecast_today') and has_value('sensor.sigen_plant_daily_load_consumption') and has_value('sensor.sigen_plant_daily_grid_import_energy') }}
 > ```
 
-## 3. Adjust Solar forecst entity  
-I use [Solcast](https://github.com/BJReplay/ha-solcast-solar); you may need to modify the entity_id to match your solar forecast entity. (Search the card for solcast)  
-
-## 4. Copy Images  
+## 3. Copy Images  
 Copy the [images](https://github.com/jasonpstokes/ha-sigenergy-card/tree/main/www) into your Home Assistant /config/www/  
 
-## 5. Add the card
+## 4. Add the card
 In your Dashboard, add a new *manual* card and paste the yaml from [ha-sigenergy-card.yaml](https://github.com/jasonpstokes/ha-sigenergy-card/blob/main/ha-sigenergy-card.yaml)  
+
+## 5. Adjust Solar forecst entity  
+I use [Solcast](https://github.com/BJReplay/ha-solcast-solar); you may need to modify the entity_id to match your solar forecast entity. (Search the card for solcast)  
 </br>  
 </hr>  
 
