@@ -1,6 +1,6 @@
 # ha-sigenergy-card
 
-![solar-card](https://github.com/user-attachments/assets/e986a16b-4170-42cc-bec2-7ad6de78afbf)
+<img width=50% src="https://github.com/user-attachments/assets/2898fbb6-b594-4604-99b2-2861eacb606f"/>
 
 Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef90bd11d7bdddf588a56e668d879) and others [here](https://github.com/TypQxQ/Sigenergy-Local-Modbus/discussions/184) with numerous changes/fixes.  
 </br>  
