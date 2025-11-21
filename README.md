@@ -1,6 +1,6 @@
 # ha-sigenergy-card
 
-<img width=50% src="https://github.com/user-attachments/assets/2898fbb6-b594-4604-99b2-2861eacb606f"/>
+<img width=50% src="https://github.com/user-attachments/assets/fd67844e-4caa-41a0-8236-24834ff41fb3"/>
 
 Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef90bd11d7bdddf588a56e668d879) and others [here](https://github.com/TypQxQ/Sigenergy-Local-Modbus/discussions/184) with numerous changes/fixes.  
 </br>  
