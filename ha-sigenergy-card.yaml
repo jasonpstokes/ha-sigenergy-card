@@ -32,7 +32,7 @@ custom_fields:
       primary: >
         {% set pv_power = states('sensor.sigen_plant_pv_power')|float(0) %}
         {{ ((pv_power * 1000)|round(0) ~ ' W') if pv_power < 1 
-          else (pv_power|round(2) ~ ' kW') if pv_power > 1 else '0 W' }}
+          else (pv_power|round(2) ~ ' kW') if pv_power > 1 }}
       secondary: SOLAR
       tap_action:
         action: more-info
@@ -59,10 +59,10 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set pv_energy = states('sensor.sigen_plant_daily_pv_energy')|round(1) %}
+        {% set pv_energy = states('sensor.sigen_plant_daily_pv_energy')|float(0)|round(1) %}
         {{ (pv_energy ~ ' kWh Today') if (pv_energy > 0) else '0 kWh Today' }}
       secondary: >-
-        {{ states('sensor.solcast_pv_forecast_forecast_today')|round(2) }} kWh forecast
+        {{ states('sensor.solcast_pv_forecast_forecast_today')|float(0)|round(2) }} kWh forecast
       tap_action:
         action: more-info
         entity: sensor.sigen_plant_daily_pv_energy
@@ -119,7 +119,7 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >-
-        {{states('sensor.sigen_plant_daily_load_consumption')|round(2) }} kWh Today
+        {{states('sensor.sigen_plant_daily_load_consumption')|float(0)|round(2) }} kWh Today
       tap_action:
         action: more-info
         entity: sensor.sigen_plant_daily_load_consumption
@@ -141,8 +141,8 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set grid_power = states('sensor.sigen_plant_grid_active_power')|float(0)|round(3) %}
-        {{ (grid_power|round(2) ~ ' kW') if (grid_power <= -1.0 or grid_power >= 1.0)
+        {% set grid_power = states('sensor.sigen_plant_grid_active_power')|float(0)|round(2) %}
+        {{ (grid_power ~ ' kW') if (grid_power <= -1.0 or grid_power >= 1.0)
           else ((grid_power * 1000)|int ~ ' W') }}
       secondary: |
         {{ 'GRID' if is_state('sensor.sigen_plant_grid_connection_status','On Grid') else 'OFF GRID' }}
