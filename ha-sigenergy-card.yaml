@@ -141,8 +141,8 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set grid_power = states('sensor.sigen_plant_grid_active_power')|float(0)|round(2) %}
-        {{ (grid_power ~ ' kW') if (grid_power <= -1.0 or grid_power >= 1.0)
+        {% set grid_power = states('sensor.sigen_plant_grid_active_power')|float(0)|round(3) %}
+        {{ (grid_power|round(2) ~ ' kW') if (grid_power <= -1.0 or grid_power >= 1.0)
           else ((grid_power * 1000)|int ~ ' W') }}
       secondary: |
         {{ 'GRID' if is_state('sensor.sigen_plant_grid_connection_status','On Grid') else 'OFF GRID' }}
@@ -712,3 +712,4 @@ styles:
       - top: 260px
       - left: 230px
       - width: 50px
+
