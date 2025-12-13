@@ -41,7 +41,7 @@ custom_fields:
         style:
           mushroom-state-info$: |
             .primary {
-              font-size: 1em !important;
+              font-size: 1.2em !important;
               font-weight: bold !important;
               letter-spacing: -0.1px !important;
               text-align: left;
@@ -100,7 +100,7 @@ custom_fields:
         style:
           mushroom-state-info$: |
             .primary {
-              font-size: 1em !important;
+              font-size: 1.2em !important;
               font-weight: bold !important;
               letter-spacing: -0.1px !important;
               text-align: left;
@@ -173,8 +173,8 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {{ states('sensor.sigen_plant_daily_grid_import_energy')|round(2) }} 
-          / -{{ states('sensor.sigen_plant_daily_grid_export_energy')|round(2) }} kWh
+        {{ states('sensor.sigen_plant_daily_grid_import_energy')|float(0)|round(2) }} 
+          / -{{ states('sensor.sigen_plant_daily_grid_export_energy')|float(0)|round(2) }} kWh
       secondary: >
         {{ 'ESS Charging' if 'Charging' in states('select.sigen_plant_remote_ems_control_mode')
           else 'ESS Discharging' if 'Discharging' in states('select.sigen_plant_remote_ems_control_mode')
