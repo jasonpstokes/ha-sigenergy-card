@@ -43,22 +43,24 @@ ii. **Sigen Plant Battery time remaining**
 > State:  
 > ```yaml
 > {% set capacity = states('sensor.sigen_plant_rated_energy_capacity')|float(0) %}
-> {% set power = states('sensor.sigen_plant_battery_power')|float(0) + 0.001 %}
 > {% set remaining_kwh = states('sensor.sigen_plant_battery_usable_capacity')|float(0) %}
-> {% if power > 0 %}
+> {% set power = states('sensor.sigen_plant_battery_power')|float(0) %}
+> {% if power >= 0 %}
 >   {% set remaining_kwh = capacity - remaining_kwh %}
 > {% endif %}
-> {% set hours = (remaining_kwh / (power|abs)) %}
-> {% set h = (hours // 1)|int %}
-> {% set m = (hours%1 * 60)|int %}
-> {% if h < 24 and (h != 0 or (h >= 0 and m > 0)) %}
->   {{ h ~ 'h ' if h > 0 }}{{ m ~ 'm ' if m >= 1 }}until {{ 'charged' if (power > 0) else 'empty' }}
+> {% if 0 not in (remaining_kwh|float(0),power|float(0)) %}
+>   {% set hours = (remaining_kwh|float(0) / (power|abs)) %}
+>   {% set h = (hours // 1)|int %}
+>   {% set m = (hours%1 * 60)|int %}
+>   {% if h < 24 and (h != 0 or (h >= 0 and m > 0)) %}
+>     {{ h ~ 'h ' if h > 0 }}{{ m ~ 'm ' if m >= 1 }}until {{ 'charged' if (power > 0) else 'empty' }}
+>   {% endif %}
 > {% endif %}
 > ```  
 > Device: `Sigen Plant` (optional)  
 > Availability template:
 > ```yaml
-> {{ has_value('sensor.solcast_pv_forecast_forecast_today') and has_value('sensor.sigen_plant_daily_load_consumption') and has_value('sensor.sigen_plant_daily_grid_import_energy') }}
+> {{ has_value('sensor.sigen_plant_rated_energy_capacity') and has_value('sensor.sigen_plant_battery_usable_capacity') and has_value('sensor.sigen_plant_battery_power') }}
 > ```
 
 ## 3. Copy Images  
