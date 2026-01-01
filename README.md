@@ -6,7 +6,7 @@ Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef
 </br>  
 
 > [!IMPORTANT]
-> This card needs/assumes the following are installed:  
+> This card assumes the following are installed:  
 > 1. [Sigenergy Local Modbus integration](https://github.com/TypQxQ/Sigenergy-Local-Modbus)  
 > 2. [Card Mod](https://github.com/thomasloven/lovelace-card-mod)  
 > 3. [Button Card](https://github.com/custom-cards/button-card)  
@@ -26,7 +26,7 @@ i. **Sigen Plant Battery usable capacity**
 > Name: `Sigen Plant Battery usable capacity`  
 > State:  
 > ```yaml
-> {{ (states('sensor.sigen_plant_battery_state_of_charge')|float(0) / 100 * states('sensor.sigen_plant_rated_energy_capacity')|float(0))|round(2) }}
+> {{ (states('sensor.sigen_plant_rated_energy_capacity')|float(0) - states('sensor.sigen_inverter_available_battery_charge_energy')|float(0))|round(2) }}
 > ```
 > Unit: `kWh`  
 > Device Class: `Energy`  
@@ -34,7 +34,7 @@ i. **Sigen Plant Battery usable capacity**
 > Device: `Sigen Plant` (optional)  
 > Availability template:
 > ```yaml
-> {{ has_value('sensor.sigen_plant_battery_state_of_charge') and has_value('sensor.sigen_plant_rated_energy_capacity') }}
+> {{ has_value('sensor.sigen_plant_rated_energy_capacity') and has_value('sensor.sigen_inverter_available_battery_charge_energy') }}
 > ```
 </br>  
 
