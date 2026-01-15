@@ -17,10 +17,10 @@ Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef
 # Instructions
 
 ## 1. Enable additional Sigen Plant entities  
-- Sigen Plant > Controls > Remote EMS Control Mode
-- Sigen Plant > Diagnostic > Rated Energy Capacity
+- Sigen Plant > Controls > Remote EMS Control Mode  
+- Sigen Plant > Diagnostic > Available Battery Charge Energy  
 
-## 2. Create two template helpers:
+## 2. Create two Template > Sensor helpers:
 
 i. **Sigen Plant Battery usable capacity**
 > Name: `Sigen Plant Battery usable capacity`  
