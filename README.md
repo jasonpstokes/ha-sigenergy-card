@@ -6,7 +6,7 @@ Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef
 </br>  
 
 > [!IMPORTANT]
-> This card assumes the following are installed:  
+> This card assumes the following are installed (e.g. via HACS):  
 > 1. [Sigenergy Local Modbus integration](https://github.com/TypQxQ/Sigenergy-Local-Modbus)  
 > 2. [Card Mod](https://github.com/thomasloven/lovelace-card-mod)  
 > 3. [Button Card](https://github.com/custom-cards/button-card)  
@@ -16,11 +16,11 @@ Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef
 
 # Instructions
 
-## 1. Enable additional Sigen Plant entities  
+## 1. Enable additional Sigen integration entities  
 - Sigen Plant > Controls > Remote EMS Control Mode  
-- Sigen Plant > Diagnostic > Available Battery Charge Energy  
+- Sigen Inverter > Diagnostic > Available Battery Charge Energy  
 
-## 2. Create two Template > Sensor helpers:
+## 2. Create two Helpers: Template > Sensor:
 
 i. **Sigen Plant Battery usable capacity**
 > Name: `Sigen Plant Battery usable capacity`  
@@ -70,7 +70,7 @@ Copy the [images](https://github.com/jasonpstokes/ha-sigenergy-card/tree/main/ww
 In your Dashboard, add a new *manual* card and paste the yaml from [ha-sigenergy-card.yaml](https://github.com/jasonpstokes/ha-sigenergy-card/blob/main/ha-sigenergy-card.yaml)  
 
 ## 5. Adjust Solar forecst entity  
-I use [Solcast](https://github.com/BJReplay/ha-solcast-solar); you may need to modify the entity_id to match your solar forecast entity. (Search the card for solcast)  
+THis will work for [Solcast](https://github.com/BJReplay/ha-solcast-solar); modify the entity_id to match a different solar forecast entity. (Search the card for solcast)  
 </br>  
 </hr>  
 
