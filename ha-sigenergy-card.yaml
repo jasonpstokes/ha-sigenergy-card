@@ -30,8 +30,8 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set pv_power = states('sensor.sigen_plant_pv_power')|float(0) %} {{
-        ((pv_power * 1000)|round(0) ~ ' W') if pv_power < 1 
+        {% set pv_power = states('sensor.sigen_plant_pv_power')|float(0) %} 
+        {{ ((pv_power * 1000)|round(0) ~ ' W') if pv_power < 1 
           else (pv_power|round(2) ~ ' kW') if pv_power > 1 }}
       secondary: SOLAR
       tap_action:
@@ -59,12 +59,10 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set pv_energy =
-        states('sensor.sigen_plant_daily_pv_energy')|float(0)|round(1) %} {{
-        (pv_energy ~ ' kWh Today') if (pv_energy > 0) else '0 kWh Today' }}
+        {% set pv_energy = states('sensor.sigen_plant_daily_pv_energy')|float(0)|round(1) %} 
+        {{ (pv_energy ~ ' kWh Today') if (pv_energy > 0) else '0 kWh Today' }}
       secondary: >-
-        {{ states('sensor.solcast_pv_forecast_forecast_today')|float(0)|round(2)
-        }} kWh forecast
+        {{ states('sensor.solcast_pv_forecast_forecast_today')|float(0)|round(2) }} kWh forecast
       tap_action:
         action: more-info
         entity: sensor.sigen_plant_daily_pv_energy
@@ -92,10 +90,9 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set house_power =
-        states('sensor.sigen_plant_consumed_power')|float(0) %}  {{
-        ((house_power * 1000)|round(0) ~ ' W') if house_power < 1 else
-        (house_power|round(2) ~ ' kW') if (house_power > 1) else '0 W' }}
+        {% set house_power = states('sensor.sigen_plant_consumed_power')|float(0) %}
+        {{ ((house_power * 1000)|round(0) ~ ' W') if house_power < 1 
+          else (house_power|round(2) ~ ' kW') if (house_power > 1) else '0 W' }}
       secondary: HOME
       tap_action:
         action: more-info
@@ -123,8 +120,7 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >-
-        {{states('sensor.sigen_plant_daily_load_consumption')|float(0)|round(2)
-        }} kWh Today
+        {{ states('sensor.sigen_plant_daily_load_consumption')|float(0)|round(2) }} kWh Today
       tap_action:
         action: more-info
         entity: sensor.sigen_plant_daily_load_consumption
@@ -146,14 +142,11 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set grid_power =
-        states('sensor.sigen_plant_grid_active_power')|float(0)|round(3) %} {{
-        (grid_power|round(2) ~ ' kW') if (grid_power <= -1.0 or grid_power >=
-        1.0)
+        {% set grid_power = states('sensor.sigen_plant_grid_active_power')|float(0)|round(3) %} 
+        {{ (grid_power|round(2) ~ ' kW') if (grid_power <= -1.0 or grid_power >= 1.0)
           else ((grid_power * 1000)|int ~ ' W') }}
       secondary: >
-        {{ 'GRID' if is_state('sensor.sigen_plant_grid_connection_status','On
-        Grid') else 'OFF GRID' }}
+        {{ 'GRID' if is_state('sensor.sigen_plant_grid_connection_status','On Grid') else 'OFF GRID' }}
       tap_action:
         action: more-info
         entity: sensor.sigen_plant_grid_active_power
@@ -181,10 +174,7 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {{
-        states('sensor.sigen_plant_daily_grid_import_energy')|float(0)|round(2)
-        }} 
-          / -{{ states('sensor.sigen_plant_daily_grid_export_energy')|float(0)|round(2) }} kWh
+        {{ states('sensor.sigen_plant_daily_grid_import_energy')|float(0)|round(2) }} / -{{ states('sensor.sigen_plant_daily_grid_export_energy')|float(0)|round(2) }} kWh
       secondary: >
         {{ 'ESS Charging' if 'Charging' in
         states('select.sigen_plant_remote_ems_control_mode')
@@ -218,8 +208,7 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >-
-        {{ states('sensor.sigen_plant_battery_state_of_charge') }}% ({{
-        states('sensor.sigen_plant_battery_usable_capacity') }} kWh)
+        {{ states('sensor.sigen_plant_battery_state_of_charge') }}% ({{ states('sensor.sigen_plant_battery_usable_capacity') }} kWh)
       secondary: BATTERY
       tap_action:
         action: more-info
@@ -248,9 +237,8 @@ custom_fields:
     card:
       type: custom:mushroom-legacy-template-card
       primary: >
-        {% set power =
-        states('sensor.sigen_plant_battery_power')|float(0)|round(1) %}  {{
-        ('Charging ' ~ power ~ ' kWh') if power > 0 
+        {% set power = states('sensor.sigen_plant_battery_power')|float(0)|round(1) %}
+        {{ ('Charging ' ~ power ~ ' kWh') if power > 0 
           else ('Discharging ' ~ power|abs ~ ' kWh') if power < 0 
           else 'Bypass (reserve mode)' if states('sensor.sigen_plant_battery_state_of_charge') <= states('number.sigen_plant_ess_backup_state_of_charge')
           else 'Floating' }}
