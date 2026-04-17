@@ -50,7 +50,7 @@ ii. **Sigen Plant Battery time remaining**
 >   {% set t = remaining / power | abs %}
 >   {% set h = t | int %}
 >   {% set m = ((t - h) * 60) | int %}
->   {{ (h ~ 'h ' if h > 0 else '') ~ (m ~ 'm' if m > 0 else '24h+') }}
+>   {{ '24h+' if h >= 24 else (h ~ 'h ' if h > 0 else '') ~ (m ~ 'm' if m > 0) }}
 >   until {{ 'charged' if power > 0 else 'empty' }}
 > {% endif %}
 > ```  
