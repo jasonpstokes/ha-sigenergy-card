@@ -42,22 +42,16 @@ ii. **Sigen Plant Battery time remaining**
 > Name: `Sigen Plant Battery time remaining`  
 > State:  
 > ```yaml
-> {% set capacity = states('sensor.sigen_plant_rated_energy_capacity')|float(0) %}
-> {% set remaining_kwh = states('sensor.sigen_plant_battery_usable_capacity')|float(0) %}
-> {% set power = states('sensor.sigen_plant_battery_power')|float(0) %}
-> {% if power >= 0 %}
->   {% set remaining_kwh = capacity - remaining_kwh %}
-> {% endif %}
-> {% if 0 not in (remaining_kwh|float(0),power|abs|default(0)) %}
->   {% set hours = (remaining_kwh|float(0) / (power|abs)) %}
->   {% set h = (hours // 1)|int %}
->   {% set m = (hours%1 * 60)|int %}
->   {% if h < 24 and (h != 0 or (h >= 0 and m > 0)) %}
->     {{ h ~ 'h ' if h > 0 }}{{ m ~ 'm ' if m >= 1 }}
->   {%else%}
->     24h+
->   {% endif %} 
->   until {{ 'charged' if (power > 0) else 'empty' }}
+> {% set capacity = states('sensor.sigen_plant_rated_energy_capacity') | float(0) %}
+> {% set power = states('sensor.sigen_plant_battery_power') | float(0) %}
+> {% set usable = states('sensor.sigen_plant_battery_usable_capacity') | float(0) %}
+> {% set remaining = capacity - usable if power >= 0 else usable %}
+> {% if remaining > 0 and power != 0 %}
+>   {% set t = remaining / power | abs %}
+>   {% set h = t | int %}
+>   {% set m = ((t - h) * 60) | int %}
+>   {{ (h ~ 'h ' if h > 0 else '') ~ (m ~ 'm' if m > 0 else '24h+') }}
+>   until {{ 'charged' if power > 0 else 'empty' }}
 > {% endif %}
 > ```  
 > Device: `Sigen Plant` (optional)  
