@@ -48,13 +48,16 @@ ii. **Sigen Plant Battery time remaining**
 > {% if power >= 0 %}
 >   {% set remaining_kwh = capacity - remaining_kwh %}
 > {% endif %}
-> {% if 0 not in (remaining_kwh|float(0),power|float(0)) %}
+> {% if 0 not in (remaining_kwh|float(0),power|abs|default(0)) %}
 >   {% set hours = (remaining_kwh|float(0) / (power|abs)) %}
 >   {% set h = (hours // 1)|int %}
 >   {% set m = (hours%1 * 60)|int %}
 >   {% if h < 24 and (h != 0 or (h >= 0 and m > 0)) %}
->     {{ h ~ 'h ' if h > 0 }}{{ m ~ 'm ' if m >= 1 }}until {{ 'charged' if (power > 0) else 'empty' }}
->   {% endif %}
+>     {{ h ~ 'h ' if h > 0 }}{{ m ~ 'm ' if m >= 1 }}
+>   {%else%}
+>     24h+
+>   {% endif %} 
+>   until {{ 'charged' if (power > 0) else 'empty' }}
 > {% endif %}
 > ```  
 > Device: `Sigen Plant` (optional)  
