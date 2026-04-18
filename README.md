@@ -8,10 +8,8 @@ Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef
 > [!IMPORTANT]
 > This card assumes the following are installed (e.g. via HACS):  
 > 1. [Sigenergy Local Modbus integration](https://github.com/TypQxQ/Sigenergy-Local-Modbus)  
-> 2. [Card Mod](https://github.com/thomasloven/lovelace-card-mod)  
-> 3. [Button Card](https://github.com/custom-cards/button-card)  
-> 4. [Mushroom](https://github.com/piitaya/lovelace-mushroom)  
-> 5. A Solar Forecast Integration like [Solcast](https://github.com/BJReplay/ha-solcast-solar) or [Forecast.solar](https://www.home-assistant.io/integrations/forecast_solar/)  
+> 2. [Button Card](https://github.com/custom-cards/button-card)  
+> 3. A Solar Forecast Integration like [Solcast](https://github.com/BJReplay/ha-solcast-solar) or [Forecast.solar](https://www.home-assistant.io/integrations/forecast_solar/)  
 </br>
 
 # Instructions
@@ -64,7 +62,8 @@ ii. **Sigen Plant Battery time remaining**
 Copy the [images](https://github.com/jasonpstokes/ha-sigenergy-card/tree/main/www) into your Home Assistant /config/www/  
 
 ## 4. Add the card
-In your Dashboard, add a new *manual* card and paste the yaml from [ha-sigenergy-card.yaml](https://github.com/jasonpstokes/ha-sigenergy-card/blob/main/ha-sigenergy-card.yaml)  
+In your Dashboard, add a new *manual* card and paste the yaml from [ha-sigenergy-card.yaml](https://github.com/jasonpstokes/ha-sigenergy-card/blob/main/ha-sigenergy-card.yaml)
+Note: Yes it would be a lot simpler with templates, but left it as one file for easy copy and paste.
 
 ## 5. Adjust Solar forecst entity  
 THis will work for [Solcast](https://github.com/BJReplay/ha-solcast-solar); modify the entity_id to match a different solar forecast entity. (Search the card for solcast)  
