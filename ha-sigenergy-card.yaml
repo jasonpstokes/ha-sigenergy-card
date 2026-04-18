@@ -84,7 +84,7 @@ custom_fields:
           value:
             - justify-self: start
             - font-size: 0.8em
-            - color: var(--primary-text-color)
+            - color: var(--secondary-text-color)
           label:
             - justify-self: start
             - font-size: 0.8em
@@ -93,7 +93,7 @@ custom_fields:
         value: |
           [[[
             const e = parseFloat(states['sensor.sigen_plant_daily_pv_energy']?.state || 0);
-            return `${e.toFixed(1)} kWh Today`;
+            return `${e.toFixed(1)} kWh today`;
           ]]]
         label: |
           [[[
@@ -157,12 +157,12 @@ custom_fields:
           value:
             - justify-self: start
             - font-size: 0.8em
-            - color: var(--primary-text-color)
+            - color: var(--secondary-text-color)
       custom_fields:
         value: |
           [[[
             const e = parseFloat(states['sensor.sigen_plant_daily_load_consumption']?.state || 0);
-            return `${e.toFixed(2)} kWh Today`;
+            return `${e.toFixed(2)} kWh today`;
           ]]]
   grid_power:
     card:
@@ -186,7 +186,12 @@ custom_fields:
             - font-size: 1em
             - font-weight: bold
             - letter-spacing: "-0.1px"
-            - color: var(--primary-text-color)
+            - color: |
+                [[[
+                  return parseInt(states['sensor.sigen_plant_grid_active_power']?.state || 0) >= 13
+                    ? '#EE4B2B'
+                    : 'white';
+                ]]]
           label:
             - justify-self: start
             - font-size: 0.8em
@@ -194,7 +199,7 @@ custom_fields:
                 [[[
                   return states['sensor.sigen_plant_grid_connection_status']?.state === 'On Grid'
                     ? 'skyblue'
-                    : 'red';
+                    : '#EE4B2B';
                 ]]]
       custom_fields:
         value: |
@@ -232,7 +237,7 @@ custom_fields:
           value:
             - justify-self: start
             - font-size: 0.8em
-            - color: var(--primary-text-color)
+            - color: var(--secondary-text-color)
           label:
             - justify-self: start
             - font-size: 0.8em
@@ -325,12 +330,9 @@ custom_fields:
         value: |
           [[[
             const p = parseFloat(states['sensor.sigen_plant_battery_power']?.state || 0);
+            if (Math.abs(p) < 0.1) return 'Floating';
             if (p > 0) return `Charging ${p.toFixed(1)} kW`;
             if (p < 0) return `Discharging ${Math.abs(p).toFixed(1)} kW`;
-            const soc = parseInt(states['sensor.sigen_plant_battery_state_of_charge']?.state || 0);
-            const reserve = parseInt(states['number.sigen_plant_ess_backup_state_of_charge']?.state || 0);
-            if (soc <= reserve) return 'Bypass (reserve mode)';
-            return 'Floating';
           ]]]
         label: |
           [[[
@@ -384,7 +386,7 @@ custom_fields:
             border: none;
             position: relative;
             width: 1px;
-            height: 72px;
+            height: 70px;
             background-color: var(--secondary-text-color);
           }
   animated_line_pv_sig_01:
@@ -407,21 +409,21 @@ custom_fields:
             transform-origin: left center;
           }
           {% if is_state('binary_sensor.sigen_plant_pv_generating', 'on') %}
-          ha-card::before {
-            content: "";
-            position: relative;
-            top: 0;
-            left: -60%;
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(to left,
-              rgba(0, 123, 255, 0.0) 0%,
-              rgba(0, 123, 255, 0.4) 40%,
-              rgba(0, 123, 255, 1.0) 100%);
-            border-radius: 1px;
-            animation: cometMove 2s ease-in-out infinite;
-            pointer-events: none;
-          }
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              background: linear-gradient(to left,
+                rgba(0, 123, 255, 0.0) 0%,
+                rgba(0, 123, 255, 0.4) 40%,
+                rgba(0, 123, 255, 1.0) 100%);
+              border-radius: 1px;
+              animation: cometMove 2s ease-in-out infinite;
+              pointer-events: none;
+            }
           {% endif %}
           @keyframes cometMove {
             0% {
@@ -451,29 +453,29 @@ custom_fields:
             transform-origin: left center;
           }
           {% if is_state('binary_sensor.sigen_plant_pv_generating', 'on') %}
-          ha-card::before {
-            content: "";
-            position: relative;
-            top: 0;
-            left: -60%;
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(to right,
-              rgba(0, 123, 255, 0.0) 0%,
-              rgba(0, 123, 255, 0.4) 40%,
-              rgba(0, 123, 255, 1.0) 100%);
-            border-radius: 1px;
-            animation: cometMove 2s ease-in-out infinite 1s;
-            pointer-events: none;
-          }
-          @keyframes cometMove {
-            0% {
-              left: -50%;
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              background: linear-gradient(to right,
+                rgba(0, 123, 255, 0.0) 0%,
+                rgba(0, 123, 255, 0.4) 40%,
+                rgba(0, 123, 255, 1.0) 100%);
+              border-radius: 1px;
+              animation: cometMove 2s ease-in-out infinite 1s;
+              pointer-events: none;
             }
-            100% {
-              left: 100%;
+            @keyframes cometMove {
+              0% {
+                left: -50%;
+              }
+              100% {
+                left: 100%;
+              }
             }
-          }
           {% endif %}
   animated_line_sig_gw:
     card:
@@ -589,31 +591,33 @@ custom_fields:
             box-sizing: content-box;
             transform: rotate(90deg);
             transform-origin: left center;
-          } {% if states('sensor.sigen_plant_grid_active_power')|float(0) != 0
-          %} ha-card::before {
-            content: "";
-            position: relative;
-            top: 0;
-            left: -60%;
-            width: 60%;
-            height: 2px;
-            {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
-              background: linear-gradient(to left,
-            {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
-              background: linear-gradient(to right,
-            {% endif %}
-            rgba(0, 123, 255, 0.0) 0%,
-            rgba(0, 123, 255, 0.4) 40%,
-            rgba(100, 123, 255, 1.0) 100%);
-            border-radius: 1px;
-            {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
-              animation: cometMove 2s ease-in-out infinite 1s;
-            {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
-              animation: cometMove 2s ease-in-out infinite;
-            {% endif %}
-            pointer-events: none;
-            } 
-          {% endif %} @keyframes cometMove {
+          }   
+          {% if states('sensor.sigen_plant_grid_active_power')|float(0) != 0 %} 
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
+                background: linear-gradient(to left,
+              {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
+                background: linear-gradient(to right,
+              {% endif %}
+              rgba(0, 123, 255, 0.0) 0%,
+              rgba(0, 123, 255, 0.4) 40%,
+              rgba(100, 123, 255, 1.0) 100%);
+              border-radius: 1px;
+              {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
+                animation: cometMove 2s ease-in-out infinite 1s;
+              {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
+                animation: cometMove 2s ease-in-out infinite;
+              {% endif %}
+              pointer-events: none;
+              }
+          {% endif %}  
+          @keyframes cometMove {
             0% {
               {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
                 left: 100%;
@@ -647,31 +651,33 @@ custom_fields:
             box-sizing: content-box;
             transform: rotate(20deg);
             transform-origin: left center;
-          }  {% if states('sensor.sigen_plant_grid_active_power')|float(0) != 0
-          %}  ha-card::before {
-            content: "";
-            position: relative;
-            top: 0;
-            left: -60%;
-            width: 60%;
-            height: 2px;
-            {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
-              background: linear-gradient(to left,
-            {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
-              background: linear-gradient(to right,
-            {% endif %}
-            rgba(0, 123, 255, 0.0) 0%,
-            rgba(0, 123, 255, 0.4) 40%,
-            rgba(100, 123, 255, 1.0) 100%);
-            border-radius: 1px;
-            {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
-              animation: cometMove 2s ease-in-out infinite;
-            {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
-              animation: cometMove 2s ease-in-out infinite 1s;
-            {% endif %}
-            pointer-events: none;
-            } 
-          {% endif %} @keyframes cometMove {
+          }
+          {% if states('sensor.sigen_plant_grid_active_power')|float(0) != 0 %}
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
+                background: linear-gradient(to left,
+              {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
+                background: linear-gradient(to right,
+              {% endif %}
+              rgba(0, 123, 255, 0.0) 0%,
+              rgba(0, 123, 255, 0.4) 40%,
+              rgba(100, 123, 255, 1.0) 100%);
+              border-radius: 1px;
+              {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
+                animation: cometMove 2s ease-in-out infinite;
+              {% elif is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}
+                animation: cometMove 2s ease-in-out infinite 1s;
+              {% endif %}
+              pointer-events: none;
+              }
+          {% endif %}
+          @keyframes cometMove {
             0% {
               {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}
                 left: 100%;
@@ -703,11 +709,11 @@ styles:
       - width: 60px
     pv_power:
       - position: absolute
-      - top: 0px
+      - top: 5px
       - left: 165px
     pv_energy:
       - position: absolute
-      - top: 40px
+      - top: 45px
       - left: 165px
     home_power:
       - position: absolute
