@@ -190,7 +190,7 @@ custom_fields:
                 [[[
                   return parseInt(states['sensor.sigen_plant_grid_active_power']?.state || 0) >= 13
                     ? '#EE4B2B'
-                    : 'white';
+                    : 'var(--primary-text-color)';
                 ]]]
           label:
             - justify-self: start
@@ -286,7 +286,7 @@ custom_fields:
                 [[[
                   return parseInt(states['sensor.sigen_plant_battery_state_of_charge']?.state || 0) <= 10
                     ? '#EE4B2B'
-                    : 'white';
+                    : 'var(--primary-text-color)';
                 ]]]
           label:
             - justify-self: end
