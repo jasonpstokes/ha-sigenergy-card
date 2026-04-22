@@ -330,13 +330,15 @@ custom_fields:
         value: |
           [[[
             const p = parseFloat(states['sensor.sigen_plant_battery_power']?.state || 0);
-            if (Math.abs(p) < 0.1) return 'Floating';
+            if (Math.abs(p) < 0.2) return 'Floating';
             if (p > 0) return `Charging ${p.toFixed(1)} kW`;
             if (p < 0) return `Discharging ${Math.abs(p).toFixed(1)} kW`;
           ]]]
         label: |
           [[[
-            return states['sensor.sigen_plant_battery_time_remaining']?.state || '';
+            return Math.abs(parseFloat(states['sensor.sigen_plant_battery_power']?.state) || 0) > 0.2
+              ? states['sensor.sigen_plant_battery_time_remaining']?.state || ''
+              : '';
           ]]]
       tap_action:
         action: more-info
