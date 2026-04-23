@@ -37,6 +37,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
@@ -75,6 +76,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
@@ -111,6 +113,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
@@ -149,6 +152,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
@@ -175,6 +179,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
@@ -228,6 +233,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
@@ -271,6 +277,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
@@ -312,6 +319,7 @@ custom_fields:
         card:
           - background: none
           - border: none
+          - border-radius: 0
         grid:
           - grid-template-areas: |
               "value"
