@@ -1,6 +1,8 @@
+
 # ha-sigenergy-card
 
-<img width=50% src="https://github.com/user-attachments/assets/fd67844e-4caa-41a0-8236-24834ff41fb3"/>
+<img width=50% src="https://github.com/user-attachments/assets/fd67844e-4caa-41a0-8236-24834ff41fb3"/>  <img width="407" height="379" alt="sig-card-updated" src="https://github.com/user-attachments/assets/e1166fd6-7e11-4a94-ad20-df0f36a71116" />  
+**ha-sigenergy-card.yaml**   // vs. //  **ha-sigenergy-card-simplified.yaml**
 
 Based on the amazing work by [fbradyirl](https://gist.github.com/fbradyirl/08fef90bd11d7bdddf588a56e668d879) and others [here](https://github.com/TypQxQ/Sigenergy-Local-Modbus/discussions/184) with numerous changes/fixes - including sole use of custom-button-card (no mushroom legacy template).  
 </br>  
