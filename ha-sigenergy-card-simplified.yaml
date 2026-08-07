@@ -1,0 +1,530 @@
+type: custom:button-card
+show_state: true
+tap_action: none
+styles:
+  card:
+    - height: 360px
+    - position: relative
+  custom_fields:
+    sigenstor:
+      - position: absolute
+      - top: 70px
+      - left: 65px
+      - width: 90px
+    gateway:
+      - position: absolute
+      - top: 120px
+      - left: 180px
+      - width: 60px
+    pv_power:
+      - position: absolute
+      - top: 5px
+      - left: 165px
+    home_power:
+      - position: absolute
+      - top: 130px
+      - left: 280px
+    grid_power:
+      - position: absolute
+      - top: 245px
+      - left: 270px
+    battery_soc:
+      - position: absolute
+      - top: 260px
+      - left: 0px
+      - transform: translateX(-35px)
+      - width: 200px
+    vertical_line_pv:
+      - position: absolute
+      - top: 13px
+      - left: 155px
+    vertical_line_home:
+      - position: absolute
+      - top: 138px
+      - left: 270px
+    vertical_line_grid:
+      - position: absolute
+      - top: 253px
+      - left: 260px
+    animated_line_pv_sig_01:
+      - position: absolute
+      - top: 35px
+      - left: 110px
+      - width: 42px
+    animated_line_pv_sig_02:
+      - position: absolute
+      - top: 35px
+      - left: 110px
+      - width: 50px
+    animated_line_sig_gw:
+      - position: absolute
+      - top: 145px
+      - left: 145px
+      - width: 39px
+    animated_line_gw_home:
+      - position: absolute
+      - top: 175px
+      - left: 238px
+      - width: 33px
+    animated_line_gw_grid_01:
+      - position: absolute
+      - top: 213px
+      - left: 210px
+      - width: 48px
+    animated_line_gw_grid_02:
+      - position: absolute
+      - top: 260px
+      - left: 210px
+      - width: 50px
+custom_fields:
+  sigenstor:
+    card:
+      type: picture
+      image: local/sigenergy_sigenstor.svg
+      tap_action:
+        action: navigate
+        navigation_path: /energy
+      card_mod:
+        style: |
+          ha-card {
+            border: 0px solid transparent !important;
+            }
+  gateway:
+    card:
+      type: picture
+      image: local/sigenergy_gateway.svg
+      tap_action:
+        action: navigate
+        navigation_path: /config/integrations/integration/sigen
+      card_mod:
+        style: |
+          ha-card {
+            border: 0px solid transparent !important;
+            }
+  pv_power:
+    card:
+      type: custom:button-card
+      entity: sensor.sigen_plant_pv_power
+      show_icon: false
+      show_name: false
+      show_state: false
+      styles:
+        card:
+          - background: none
+          - border: none
+          - border-radius: 0
+        grid:
+          - grid-template-areas: '"value" "label"'
+        custom_fields:
+          value:
+            - justify-self: start
+            - font-size: 2.5rem
+            - font-weight: 600
+            - letter-spacing: -1px
+            - padding-right: 2px
+            - color: >-
+                color-mix(in oklab, var(--primary-text-color) 70%,
+                var(--secondary-text-color))
+          label:
+            - justify-self: start
+            - font-size: 1rem
+            - color: orange
+            - margin: -5px 0 0 0
+      custom_fields:
+        value: |
+          [[[
+            const v = parseFloat(states['sensor.sigen_plant_pv_power']?.state || 0);
+            return v < 1 ? `${Math.round(v * 1000)}w` : `${v.toFixed(2)}k`;
+          ]]]
+        label: >-
+          <ha-icon icon="mdi:white-balance-sunny" style=width:1.5em></ha-icon>
+          Solar
+      tap_action:
+        action: more-info
+        entity: sensor.sigen_plant_pv_power
+  home_power:
+    card:
+      type: custom:button-card
+      entity: sensor.sigen_plant_consumed_power
+      show_icon: false
+      show_name: false
+      show_state: false
+      styles:
+        card:
+          - background: none
+          - border: none
+          - border-radius: 0
+        grid:
+          - grid-template-areas: '"value" "label"'
+        custom_fields:
+          value:
+            - justify-self: start
+            - font-size: 2.5rem
+            - font-weight: 600
+            - letter-spacing: -1px
+            - padding-right: 2px
+            - color: >-
+                color-mix(in oklab, var(--primary-text-color) 70%,
+                var(--secondary-text-color))
+          label:
+            - justify-self: start
+            - font-size: 1rem
+            - color: skyblue
+            - margin: -5px 0 0 0
+      custom_fields:
+        value: |
+          [[[
+            const v = parseFloat(states['sensor.sigen_plant_consumed_power']?.state || 0);
+            return v < 1 ? `${Math.round(v * 1000)}w` : `${v.toFixed(2)}k`;
+          ]]]
+        label: <ha-icon icon="mdi:flash" style=width:1.5em></ha-icon> Usage
+      tap_action:
+        action: more-info
+        entity: sensor.sigen_plant_consumed_power
+  grid_power:
+    card:
+      type: custom:button-card
+      entity: sensor.sigen_plant_grid_active_power
+      show_icon: false
+      show_name: false
+      show_state: false
+      styles:
+        card:
+          - background: none
+          - border: none
+          - border-radius: 0
+        grid:
+          - grid-template-areas: '"value" "label"'
+        custom_fields:
+          value:
+            - justify-self: start
+            - font-size: 2.5rem
+            - font-weight: 600
+            - letter-spacing: -1px
+            - padding-right: 2px
+            - color: |
+                [[[
+                  return parseInt(states['sensor.sigen_plant_grid_active_power']?.state || 0) >= 12 ? '#EE4B2B' : 'var(--secondary-text-color)';
+                ]]]
+          label:
+            - justify-self: start
+            - font-size: 1rem
+            - color: |
+                [[[
+                  return states['sensor.sigen_plant_grid_connection_status']?.state === 'On Grid' ? 'skyblue' : '#EE4B2B';
+                ]]]
+            - margin: -5px 0 0 0
+      custom_fields:
+        value: |
+          [[[
+            const v = parseFloat(states['sensor.sigen_plant_grid_active_power']?.state || 0);
+            return Math.abs(v) < 1 ? `${Math.round(v * 1000)}w` : `${v.toFixed(2)}k`;
+          ]]]
+        label: |
+          [[[ 
+            const grid_state = states['sensor.sigen_plant_grid_connection_status']?.state;
+            const ems_state = states['select.sigen_plant_remote_ems_control_mode']?.state;
+            const ems_mapping = {
+              'Maximum Self Consumption': '',
+              'Command Charging (Grid First)': ' - charging',
+              'Command Charging (PV First)': ' - charging',
+              'Command Discharging (PV First)': ' - exporting',
+              'Command Discharging (ESS First)': ' - exporting'
+            };
+            const ems_suffix = ems_mapping[ems_state] || '';
+            let icon = 'mdi:transmission-tower-off';
+            let label = 'OFF GRID';
+            if (grid_state === 'On Grid') {
+              icon = 'mdi:transmission-tower';
+              label = `Grid ${ems_suffix}`;
+            }
+            return `<ha-icon icon="${icon}" style="width: 1.5em; height: 1.5em;"></ha-icon> ${label}`;
+          ]]]
+      tap_action:
+        action: more-info
+        entity: sensor.sigen_plant_grid_active_power
+  battery_soc:
+    card:
+      type: custom:button-card
+      entity: sensor.sigen_plant_battery_state_of_charge
+      show_icon: false
+      show_name: false
+      show_state: false
+      styles:
+        card:
+          - background: none
+          - border: none
+          - border-radius: 0
+        grid:
+          - grid-template-areas: '"value" "label" "time"'
+        custom_fields:
+          value:
+            - justify-self: end
+            - font-size: 2.5rem
+            - font-weight: 600
+            - letter-spacing: -1px
+            - padding-right: 1px
+            - color: |
+                [[[
+                  const soc = Number(states['sensor.sigen_plant_battery_state_of_charge']?.state) || 0;
+                  const backup = Number(states['number.sigen_plant_ess_backup_state_of_charge']?.state) || 0;
+                  return (soc <= backup || soc < 10) ? '#EE4B2B' : 'color-mix(in oklab, var(--primary-text-color) 70%, var(--secondary-text-color))';
+                ]]]
+          label:
+            - justify-self: end
+            - text-align: right
+            - font-size: 1rem
+            - color: skyblue
+            - margin: -5px 0 0 0
+          time:
+            - justify-self: end
+            - text-align: right
+            - font-size: 1rem
+            - opacity: 0.5
+      custom_fields:
+        value: >
+          [[[ return
+          (states['sensor.sigen_plant_battery_state_of_charge']?.state || '--')
+          + '%'; ]]]
+        label: Battery
+        time: |
+          [[[ 
+            const soc = parseFloat(states['sensor.sigen_plant_battery_state_of_charge']?.state);
+            const backup = parseFloat(states['number.sigen_plant_ess_backup_state_of_charge']?.state);
+            const timeRemaining = states['sensor.sigen_plant_battery_time_remaining']?.state;
+            if (isNaN(soc) || isNaN(backup) || soc <= backup) {
+              return '';
+            }
+            return timeRemaining;
+          ]]]
+      tap_action:
+        action: more-info
+        entity: sensor.sigen_plant_battery_usable_capacity
+  vertical_line_pv: >
+    <div style="width: 1px; height: 55px; background-color:
+    var(--secondary-text-color);"></div>
+  vertical_line_home: >
+    <div style="width: 1px; height: 55px; background-color:
+    var(--secondary-text-color);"></div>
+  vertical_line_grid: >
+    <div style="width: 1px; height: 55px; background-color:
+    var(--secondary-text-color);"></div>
+  animated_line_pv_sig_01:
+    card:
+      type: custom:button-card
+      triggers_update: binary_sensor.sigen_plant_pv_generating
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+            height: 2px;
+            background: var(--secondary-text-color);
+            border: none;
+            opacity: 0.6;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            box-sizing: content-box;
+            transform: rotate(0deg);
+            transform-origin: left center;
+          }
+          {% if is_state('binary_sensor.sigen_plant_pv_generating', 'on') %}
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              background: linear-gradient(to left, rgba(0, 123, 255, 0) 0%, rgba(0, 123, 255, 0.4) 40%, rgba(0, 123, 255, 1) 100%);
+              border-radius: 1px;
+              animation: cometMove 2s ease-in-out infinite;
+              pointer-events: none;
+            }
+          {% endif %}
+          @keyframes cometMove {
+            0% { left: 100%; }
+            100% { left: -30%; }
+          }
+  animated_line_pv_sig_02:
+    card:
+      type: custom:button-card
+      triggers_update: binary_sensor.sigen_plant_pv_generating
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+            height: 2px;
+            background: var(--secondary-text-color);
+            border: none;
+            opacity: 0.6;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            box-sizing: content-box;
+            transform: rotate(90deg);
+            transform-origin: left center;
+          }
+          {% if is_state('binary_sensor.sigen_plant_pv_generating', 'on') %}
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              background: linear-gradient(to right, rgba(0, 123, 255, 0) 0%, rgba(0, 123, 255, 0.4) 40%, rgba(0, 123, 255, 1) 100%);
+              border-radius: 1px;
+              animation: cometMove 2s ease-in-out infinite 1s;
+              pointer-events: none;
+            }
+            @keyframes cometMove {
+              0% { left: -50%; }
+              100% { left: 100%; }
+            }
+          {% endif %}
+  animated_line_sig_gw:
+    card:
+      type: custom:button-card
+      triggers_update: sensor.sigen_plant_battery_power
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+            height: 2px;
+            background: var(--secondary-text-color);
+            border: none;
+            opacity: 0.6;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            box-sizing: content-box;
+            transform: rotate(20deg);
+            transform-origin: left center;
+          }
+          ha-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(to {% if is_state('binary_sensor.sigen_plant_battery_discharging', 'on') or is_state('binary_sensor.sigen_plant_pv_generating', 'on') %}right{% else %}left{% endif %}, rgba(0, 123, 255, 0) 0%, rgba(0, 123, 255, 0.4) 40%, rgba(0, 123, 255, 1) 100%);
+            border-radius: 1px;
+            animation: cometMove 2.5s ease-in-out infinite;
+            pointer-events: none;
+          }
+          @keyframes cometMove {
+            0% { left: {% if is_state('binary_sensor.sigen_plant_battery_discharging', 'on') or is_state('binary_sensor.sigen_plant_pv_generating', 'on') %}-60%{% else %}100%{% endif %}; }
+            100% { left: {% if is_state('binary_sensor.sigen_plant_battery_discharging', 'on') or is_state('binary_sensor.sigen_plant_pv_generating', 'on') %}100%{% else %}-60%{% endif %}; }
+          }
+  animated_line_gw_home:
+    card:
+      type: custom:button-card
+      triggers_update: sensor.sigen_plant_plant_active_power
+      card_mod:
+        style: |
+          ha-card {
+            position: relative;
+            height: 2px;
+            background: var(--secondary-text-color);
+            border: none;
+            opacity: 0.6;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            box-sizing: content-box;
+            transform: rotate(-25deg);
+            transform-origin: left center;
+          }
+          ha-card::before {
+            content: "";
+            position: relative;
+            top: 0;
+            left: -60%;
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(to right, rgba(0, 123, 255, 0) 0%, rgba(0, 123, 255, 0.4) 40%, rgba(0, 123, 255, 1) 100%);
+            border-radius: 1px;
+            animation: cometMove 2s ease-in-out infinite 2s;
+            pointer-events: none;
+          }
+          @keyframes cometMove {
+            0% { left: -30%; }
+            100% { left: 100%; }
+          }
+  animated_line_gw_grid_01:
+    card:
+      type: custom:button-card
+      triggers_update: sensor.sigen_plant_grid_active_power
+      card_mod:
+        style: >
+          ha-card {
+            position: relative;
+            height: {{ '2px' if is_state('sensor.sigen_plant_grid_connection_status','On Grid') else '0px' }};
+            background: var(--secondary-text-color);
+            border: none;
+            opacity: 0.6;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            box-sizing: content-box;
+            transform: rotate(90deg);
+            transform-origin: left center;
+          } {% if states('sensor.sigen_plant_grid_active_power')|float(0) != 0
+          %} 
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              background: linear-gradient(to {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}left{% else %}right{% endif %}, rgba(0, 123, 255, 0) 0%, rgba(0, 123, 255, 0.4) 40%, rgba(100, 123, 255, 1) 100%);
+              border-radius: 1px;
+              animation: cometMove 2s ease-in-out infinite {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}1s{% endif %};
+              pointer-events: none;
+            }
+          {% endif %} @keyframes cometMove {
+            0% { left: {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}100%{% else %}-30%{% endif %}; }
+            100% { left: {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}-30%{% else %}100%{% endif %}; }
+          }
+  animated_line_gw_grid_02:
+    card:
+      type: custom:button-card
+      triggers_update: sensor.sigen_plant_grid_active_power
+      card_mod:
+        style: >
+          ha-card {
+            position: relative;
+            height: {{ '2px' if is_state('sensor.sigen_plant_grid_connection_status','On Grid') else '0px' }};
+            background: var(--secondary-text-color);
+            border: none;
+            opacity: 0.6;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            box-sizing: content-box;
+            transform: rotate(20deg);
+            transform-origin: left center;
+          } {% if states('sensor.sigen_plant_grid_active_power')|float(0) != 0
+          %}
+            ha-card::before {
+              content: "";
+              position: relative;
+              top: 0;
+              left: -60%;
+              width: 60%;
+              height: 2px;
+              background: linear-gradient(to {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}left{% else %}right{% endif %}, rgba(0, 123, 255, 0) 0%, rgba(0, 123, 255, 0.4) 40%, rgba(100, 123, 255, 1) 100%);
+              border-radius: 1px;
+              animation: cometMove 2s ease-in-out infinite {% if is_state('binary_sensor.sigen_plant_exporting_to_grid', 'on') %}1s{% endif %};
+              pointer-events: none;
+            }
+          {% endif %} @keyframes cometMove {
+            0% { left: {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}100%{% else %}-40%{% endif %}; }
+            100% { left: {% if is_state('binary_sensor.sigen_plant_importing_from_grid', 'on') %}-30%{% else %}100%{% endif %}; }
+          }
+grid_options:
+  columns: 12
+  rows: auto
